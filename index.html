@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dhifara Tour and Travel - Perjalanan Umroh Amanah</title>
-    <meta name="description" content="Prototipe landing page Dhifara Tour and Travel dengan desain modern, soft, fluent, dan fitur dark mode.">
+    <meta name="description" content="Prototipe landing page Dhifara Tour and Travel dengan slideshow hero yang dinamis.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -187,17 +187,58 @@
         .dark-mode #theme-toggle .ph-moon { display: none; }
         .dark-mode #theme-toggle .ph-sun { display: inline; }
 
-
-        /* Hero Section */
+        /* == HERO SLIDESHOW CSS START == */
         #hero {
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1582222359572-8a7adeb084da?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+            position: relative;
             height: 90vh;
             display: flex;
             align-items: center;
             text-align: center;
             color: white;
+            overflow: hidden;
+        }
+
+        .hero-slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            transform: scale(1.05); /* Efek Ken Burns awal */
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1); /* Efek Ken Burns akhir */
+            transition: opacity 1.5s ease-in-out, transform 7s linear;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
         }
 
         #hero h1 {
@@ -221,6 +262,9 @@
              color: white;
              border-color: white;
         }
+        /* == HERO SLIDESHOW CSS END == */
+        
+        /* -- CSS lainnya tetap sama -- */
 
         /* Keunggulan Section */
         #keunggulan { text-align: center; }
@@ -273,7 +317,6 @@
             width: 100%;
         }
 
-        /* Gradient overlay for fade effect */
         .slider-container::before,
         .slider-container::after {
             content: "";
@@ -522,7 +565,11 @@
 
     <main>
         <section id="hero">
-            <div class="container">
+            <div class="hero-slideshow-container"></div>
+            
+            <div class="hero-overlay"></div>
+
+            <div class="container hero-content">
                 <h1>Menuju Baitullah dengan Hati yang Tenang</h1>
                 <p>Dhifara Tour & Travel: Sahabat Perjalanan Ibadah Anda yang Amanah dan Profesional.</p>
                 <div class="cta-buttons">
@@ -531,7 +578,6 @@
                 </div>
             </div>
         </section>
-
         <section id="keunggulan">
             <div class="container">
                 <h2 class="section-title">Mengapa Memilih Dhifara Tour?</h2>
@@ -566,7 +612,7 @@
                 <h3 class="section-subtitle">Mengenal Tim Profesional di Balik Perjalanan Ibadah Anda</h3>
                 <div class="about-us-content">
                     <p>
-                        Dhifara Tour and Travel lahir dari niat tulus untuk melayani para tamu Allah dengan pelayanan terbaik. Berdiri sejak 2025 di kota Padang, kami berkomitmen untuk menjaga amanah, memberikan bimbingan ibadah yang sesuai sunnah, serta memastikan setiap perjalanan Anda nyaman, tenang, dan berkesan. Kami percaya bahwa perjalanan umroh adalah momen spiritual yang mendalam, dan tugas kami adalah memastikan Anda dapat beribadah dengan khusyuk tanpa mengkhawatirkan hal teknis.
+                        Dhifara Tour and Travel lahir dari niat tulus untuk melayani para tamu Allah dengan pelayanan terbaik. Berdiri sejak 2010 di kota Padang, kami berkomitmen untuk menjaga amanah, memberikan bimbingan ibadah yang sesuai sunnah, serta memastikan setiap perjalanan Anda nyaman, tenang, dan berkesan. Kami percaya bahwa perjalanan umroh adalah momen spiritual yang mendalam, dan tugas kami adalah memastikan Anda dapat beribadah dengan khusyuk tanpa mengkhawatirkan hal teknis.
                     </p>
                 </div>
             </div>
@@ -811,6 +857,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- SCRIPT UNTUK DARK MODE & HEADER ---
             const themeToggle = document.getElementById('theme-toggle');
             const header = document.getElementById('main-header');
 
@@ -825,6 +872,52 @@
                     header.classList.remove('scrolled');
                 }
             });
+
+            // --- SCRIPT UNTUK HERO SLIDESHOW ---
+
+            //
+            // ** CARA MENGEDIT GAMBAR SLIDESHOW **
+            // Ganti, tambah, atau kurangi link gambar di dalam daftar 'heroImages' di bawah ini.
+            // Gunakan gambar berkualitas tinggi dengan orientasi landscape (melebar).
+            //
+            const heroImages = [
+                'https://images.unsplash.com/photo-1582222359572-8a7adeb084da?q=80&w=2070&auto=format&fit=crop', // Ka'bah
+                'https://images.unsplash.com/photo-1596378443908-94b3501a3d44?q=80&w=2070&auto=format&fit=crop', // Masjid Nabawi Payung
+                'https://images.unsplash.com/photo-1563897333221-78c6914a806c?q=80&w=1974&auto=format&fit=crop', // Jam Makkah
+                'https://images.unsplash.com/photo-1604473322448-5c12c7655077?q=80&w=2070&auto=format&fit=crop'  // Kubah Hijau
+            ];
+
+            const slideshowContainer = document.querySelector('.hero-slideshow-container');
+            let currentSlideIndex = 0;
+
+            // Membuat elemen slide dari daftar gambar
+            heroImages.forEach(imgUrl => {
+                const slide = document.createElement('div');
+                slide.className = 'hero-slide';
+                slide.style.backgroundImage = `url('${imgUrl}')`;
+                slideshowContainer.appendChild(slide);
+            });
+
+            const slides = document.querySelectorAll('.hero-slide');
+
+            function showNextSlide() {
+                // Sembunyikan slide saat ini
+                slides[currentSlideIndex].classList.remove('active');
+                
+                // Pindah ke slide berikutnya, kembali ke awal jika sudah di akhir
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                
+                // Tampilkan slide berikutnya
+                slides[currentSlideIndex].classList.add('active');
+            }
+
+            // Tampilkan slide pertama saat halaman dimuat
+            if (slides.length > 0) {
+                slides[0].classList.add('active');
+                // Atur interval untuk pergantian slide otomatis setiap 7 detik
+                setInterval(showNextSlide, 7000);
+            }
+
         });
     </script>
 </body>
