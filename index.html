@@ -15,16 +15,16 @@
     <style>
         /* CSS Variables untuk Tema */
         :root {
-            /* TEMA LIGHT MODE BARU DENGAN GRADASI BIRU-NAVY */
+            /* TEMA LIGHT MODE */
             --bg-light: #F8F8F8;
             --text-light: #333333;
             --accent-gradient-light: linear-gradient(90deg, #3A7DDE 0%, #0A192F 100%);
-            --accent1-light-solid: #3A7DDE; /* Warna biru solid untuk link & hover */
-            --accent2-light: #6B9ADF; /* Biru muda untuk ikon */
+            --accent1-light-solid: #3A7DDE;
+            --accent2-light: #6B9ADF;
             --card-bg-light: #FFFFFF;
             --border-light: #EAEAEA;
 
-            /* TEMA DARK MODE (TETAP SAMA SEPERTI SEBELUMNYA) */
+            /* TEMA DARK MODE */
             --bg-dark: linear-gradient(180deg, #0A192F 0%, #172A46 100%);
             --text-dark: #EAEAEA;
             --accent1-dark: #E6C17C;
@@ -64,6 +64,11 @@
             font-family: var(--font-heading);
             font-weight: 600;
         }
+
+        .section-title { font-size: 36px; margin-bottom: 20px; text-align: center; }
+        .section-subtitle { font-size: 18px; margin-bottom: 50px; text-align: center; color: #777; }
+        .dark-mode .section-subtitle { color: #bbb; }
+
 
         section {
             padding: 80px 0;
@@ -219,7 +224,6 @@
 
         /* Keunggulan Section */
         #keunggulan { text-align: center; }
-        .section-title { font-size: 36px; margin-bottom: 50px; }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -246,7 +250,105 @@
         .dark-mode .feature-card i { color: var(--accent2-dark); }
         .feature-card h3 { margin-bottom: 10px; }
 
-        /* Styling untuk section Paket Umroh (SUDAH DIPERBAIKI) */
+        /* == TENTANG KAMI & SLIDER SECTION START == */
+        #tentang-kami {
+            padding-bottom: 100px;
+        }
+        .about-us-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            line-height: 1.7;
+        }
+
+        @keyframes scroll-right-to-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .slider-container {
+            overflow: hidden;
+            padding: 20px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Gradient overlay for fade effect */
+        .slider-container::before,
+        .slider-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 100%;
+            z-index: 2;
+        }
+
+        .slider-container::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-light), transparent);
+        }
+        .slider-container::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-light), transparent);
+        }
+        .dark-mode .slider-container::before {
+            background: linear-gradient(to right, #172A46, transparent);
+        }
+        .dark-mode .slider-container::after {
+            background: linear-gradient(to left, #172A46, transparent);
+        }
+        
+        .slider-track {
+            display: flex;
+            width: calc(280px * 24); /* card width * total cards (12 original + 12 duplicate) */
+            animation: scroll-right-to-left 60s linear infinite;
+        }
+
+        .slider-container:hover .slider-track {
+            animation-play-state: paused;
+        }
+        
+        .staff-card {
+            width: 250px;
+            margin: 0 15px;
+            background: var(--card-bg-light);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+            text-align: center;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+        .dark-mode .staff-card {
+            background: var(--card-bg-dark);
+            border-color: var(--border-dark);
+        }
+        .staff-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid var(--accent2-light);
+        }
+        .dark-mode .staff-card img {
+            border-color: var(--accent2-dark);
+        }
+        .staff-card h4 {
+            font-family: var(--font-heading);
+            margin: 10px 0 5px 0;
+        }
+        .staff-card span {
+            font-size: 14px;
+            color: var(--accent1-light-solid);
+        }
+        .dark-mode .staff-card span {
+            color: var(--accent1-dark);
+        }
+        /* == TENTANG KAMI & SLIDER SECTION END == */
+
+        /* Paket Section */
         #paket {
             background-color: var(--card-bg-light);
             transition: background-color var(--transition-speed);
@@ -386,6 +488,11 @@
             .nav-menu { display: none; }
             #hero h1 { font-size: 36px; }
             #hero p { font-size: 16px; }
+
+            .slider-container::before,
+            .slider-container::after {
+                width: 50px;
+            }
         }
     </style>
 </head>
@@ -398,6 +505,7 @@
                 <ul class="nav-menu">
                     <li><a href="#hero" class="nav-link">Beranda</a></li>
                     <li><a href="#keunggulan" class="nav-link">Keunggulan</a></li>
+                    <li><a href="#tentang-kami" class="nav-link">Tentang Kami</a></li>
                     <li><a href="#paket" class="nav-link">Paket Umroh</a></li>
                     <li><a href="#faq" class="nav-link">FAQ</a></li>
                 </ul>
@@ -452,9 +560,146 @@
             </div>
         </section>
 
+        <section id="tentang-kami">
+            <div class="container">
+                <h2 class="section-title">Tentang Kami</h2>
+                <h3 class="section-subtitle">Mengenal Tim Profesional di Balik Perjalanan Ibadah Anda</h3>
+                <div class="about-us-content">
+                    <p>
+                        Dhifara Tour and Travel lahir dari niat tulus untuk melayani para tamu Allah dengan pelayanan terbaik. Berdiri sejak 2010 di kota Padang, kami berkomitmen untuk menjaga amanah, memberikan bimbingan ibadah yang sesuai sunnah, serta memastikan setiap perjalanan Anda nyaman, tenang, dan berkesan. Kami percaya bahwa perjalanan umroh adalah momen spiritual yang mendalam, dan tugas kami adalah memastikan Anda dapat beribadah dengan khusyuk tanpa mengkhawatirkan hal teknis.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="slider-container">
+                <div class="slider-track">
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Manajemen" alt="Foto Staff 1">
+                        <h4>H. Ahmad Subarjo</h4>
+                        <span>Direktur Utama</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Manajemen" alt="Foto Staff 2">
+                        <h4>Hj. Fatimah Az-Zahra</h4>
+                        <span>Direktur Operasional</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Manajemen" alt="Foto Staff 3">
+                        <h4>Budi Santoso</h4>
+                        <span>Manajer Keuangan</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Tim" alt="Foto Staff 4">
+                        <h4>Siti Aisyah</h4>
+                        <span>Customer Service</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Tim" alt="Foto Staff 5">
+                        <h4>Rizki Maulana</h4>
+                        <span>Koordinator Lapangan</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Tim" alt="Foto Staff 6">
+                        <h4>Dewi Lestari</h4>
+                        <span>Administrasi & Tiket</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Pembimbing" alt="Foto Staff 7">
+                        <h4>Ust. Abdullah Said</h4>
+                        <span>Pembimbing Ibadah</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Pembimbing" alt="Foto Staff 8">
+                        <h4>Ust. Yusuf Al-Fatih</h4>
+                        <span>Pembimbing Ibadah</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Tim" alt="Foto Staff 9">
+                        <h4>Indra Gunawan</h4>
+                        <span>Dokumentasi</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Tim" alt="Foto Staff 10">
+                        <h4>Fitriani</h4>
+                        <span>Perlengkapan</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Tim" alt="Foto Staff 11">
+                        <h4>Agus Salim</h4>
+                        <span>Transportasi</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Pembimbing" alt="Foto Staff 12">
+                        <h4>Usth. Khadijah</h4>
+                        <span>Pembimbing Wanita</span>
+                    </div>
+
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Manajemen" alt="Foto Staff 1">
+                        <h4>H. Ahmad Subarjo</h4>
+                        <span>Direktur Utama</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Manajemen" alt="Foto Staff 2">
+                        <h4>Hj. Fatimah Az-Zahra</h4>
+                        <span>Direktur Operasional</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Manajemen" alt="Foto Staff 3">
+                        <h4>Budi Santoso</h4>
+                        <span>Manajer Keuangan</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Tim" alt="Foto Staff 4">
+                        <h4>Siti Aisyah</h4>
+                        <span>Customer Service</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Tim" alt="Foto Staff 5">
+                        <h4>Rizki Maulana</h4>
+                        <span>Koordinator Lapangan</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Tim" alt="Foto Staff 6">
+                        <h4>Dewi Lestari</h4>
+                        <span>Administrasi & Tiket</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Pembimbing" alt="Foto Staff 7">
+                        <h4>Ust. Abdullah Said</h4>
+                        <span>Pembimbing Ibadah</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Pembimbing" alt="Foto Staff 8">
+                        <h4>Ust. Yusuf Al-Fatih</h4>
+                        <span>Pembimbing Ibadah</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Tim" alt="Foto Staff 9">
+                        <h4>Indra Gunawan</h4>
+                        <span>Dokumentasi</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/0A192F/FFFFFF?text=Tim" alt="Foto Staff 10">
+                        <h4>Fitriani</h4>
+                        <span>Perlengkapan</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/3A7DDE/FFFFFF?text=Tim" alt="Foto Staff 11">
+                        <h4>Agus Salim</h4>
+                        <span>Transportasi</span>
+                    </div>
+                    <div class="staff-card">
+                        <img src="https://via.placeholder.com/250/6B9ADF/FFFFFF?text=Pembimbing" alt="Foto Staff 12">
+                        <h4>Usth. Khadijah</h4>
+                        <span>Pembimbing Wanita</span>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="paket">
             <div class="container">
-                <h2 class="section-title" style="text-align:center;">Pilihan Paket Umroh untuk Anda</h2>
+                <h2 class="section-title">Pilihan Paket Umroh untuk Anda</h2>
                 <div class="paket-grid">
                     <div class="paket-card">
                         <img src="https://images.unsplash.com/photo-1563897333221-78c6914a806c?q=80&w=1974&auto=format&fit=crop" alt="Paket Umroh Reguler">
@@ -501,7 +746,7 @@
 
         <section id="faq">
             <div class="container">
-                <h2 class="section-title" style="text-align:center;">Masih Ada Pertanyaan?</h2>
+                <h2 class="section-title">Masih Ada Pertanyaan?</h2>
                 <div class="faq-container">
                     <details>
                         <summary>Apa saja syarat untuk mendaftar umroh?</summary>
